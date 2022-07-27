@@ -1,4 +1,6 @@
-import "./App.css";
+import { useState } from "react";
+import CitySearchBar from "components/CitySearchBar";
+import styles from "./App.module.scss";
 
 // ACCEPTANCE CRITERIA:
 // - A user can search for any city and get the weather forecast.
@@ -15,12 +17,24 @@ import "./App.css";
 // 7. Explain why cypress e2e test would be overkill here (e.g. reliance on 3rd api, not much we can assert on that Component test hasn't covered).
 // 8. Add Cypress visual test
 
+const cityOptions = ["Paris", "Sydney", "New York", "London"];
+
 function App() {
+  const [city, setCity] = useState("");
+
+  const changeCity = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setCity(e.target.value);
+
   return (
-    <div className="App">
+    <div className={styles.App}>
       <header className="App-header">
         <h1>Weather Forecaster</h1>
-        <h2>Pick a city</h2>
+        <CitySearchBar
+          value={city}
+          onChange={changeCity}
+          options={cityOptions}
+          label="Pick a city: "
+        />
       </header>
     </div>
   );
