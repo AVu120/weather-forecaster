@@ -1,0 +1,17 @@
+.error {
+  color: red;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  margin-right: 5px;
+}
