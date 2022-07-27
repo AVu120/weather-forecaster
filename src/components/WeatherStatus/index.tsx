@@ -5,7 +5,7 @@ import { FilteredListItem } from "types/weather";
 import styled from "styled-components";
 
 interface Props {
-  weatherForecast: FilteredListItem;
+  weatherStatus: FilteredListItem;
 }
 
 const CurrentTemperature = styled.span`
@@ -16,6 +16,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   column-gap: 10px;
+  justify-content: flex-start;
 `;
 
 const CelsiusIcon = styled.span`
@@ -36,9 +37,9 @@ const Icon = ({ description }: { description: string }) => {
   if (description.includes("rain")) return <RainyIcon />;
   return <CloudyIcon />;
 };
-const WeatherStatus = ({ weatherForecast }: Props) => {
+const WeatherStatus = ({ weatherStatus }: Props) => {
   const { temperature, precipitation, humidity, wind, description, dateTime } =
-    weatherForecast;
+    weatherStatus;
   return (
     <Container>
       <Icon description={description} />

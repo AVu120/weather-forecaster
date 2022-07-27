@@ -15,6 +15,8 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
+  justify-content: flex-start;
+  column-gap: 1rem;
 `;
 
 const Label = styled.label`

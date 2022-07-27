@@ -7,6 +7,7 @@ import { getWeatherForecast } from "services/weather";
 import { FilteredListItem, FilteredWeatherForecast } from "types/weather";
 import LoadingSpinner from "components/LoadingSpinner";
 import WeatherStatus from "components/WeatherStatus";
+import WeatherForecast from "components/WeatherForecast";
 
 // ACCEPTANCE CRITERIA:
 // - A user can search for any city and get the weather forecast.
@@ -123,7 +124,12 @@ function App() {
         {isLoadingWeatherForecast ? (
           <LoadingSpinner />
         ) : (
-          weatherStatus && <WeatherStatus weatherForecast={weatherStatus} />
+          <>
+            {weatherStatus && <WeatherStatus weatherStatus={weatherStatus} />}
+            {weatherForecast && (
+              <WeatherForecast weatherForecast={weatherForecast} />
+            )}
+          </>
         )}
       </div>
     </div>
