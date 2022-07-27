@@ -5,6 +5,7 @@ import { getCities, mockedGetCitiesApiResponse } from "services/city";
 import styles from "./App.module.scss";
 import { getWeatherForecast } from "services/weather";
 import { FilteredWeatherForecast } from "types/weather";
+import LoadingSpinner from "components/LoadingSpinner";
 
 // ACCEPTANCE CRITERIA:
 // - A user can search for any city and get the weather forecast.
@@ -24,6 +25,7 @@ import { FilteredWeatherForecast } from "types/weather";
 // City object with unneeded properties removed.
 type FilteredCity = Pick<City, "name" | "coordinates">;
 function App() {
+  const [searchName, setSearchName] = useState("");
   const [selectedCity, setSelectedCity] = useState<FilteredCity | undefined>(
     undefined
   );
@@ -32,12 +34,15 @@ function App() {
   >();
   const [cities, setCities] = useState<FilteredCity[]>([]);
   const [isLoadingCities, setIsLoadingCities] = useState(false);
+  const [isLoadingWeatherForecast, setIsLoadingWeatherForecast] =
+    useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
 
   const cityNames = cities.map((city) => city.name);
 
   const fetchCities = async () => {
     try {
+      setIsLoadingCities(true);
       // const cities = await getCities();
       const cities = mockedGetCitiesApiResponse;
       const filteredCities = cities.map((city) => ({
@@ -47,11 +52,14 @@ function App() {
       setCities(filteredCities);
     } catch (error) {
       setError("Error: failed to fetch cities.");
+    } finally {
+      setIsLoadingCities(false);
     }
   };
 
   const fetchWeatherForecast = async (latitude: number, longitude: number) => {
     try {
+      setIsLoadingWeatherForecast(true);
       const weatherForecast = await getWeatherForecast(latitude, longitude);
       const FilteredWeatherForecast = {
         ...weatherForecast,
@@ -69,6 +77,8 @@ function App() {
       setWeatherForecast(FilteredWeatherForecast);
     } catch (error) {
       setError("Error: failed to fetch weather forecast.");
+    } finally {
+      setIsLoadingWeatherForecast(false);
     }
   };
 
@@ -78,28 +88,37 @@ function App() {
     // console.log(process.env.REACT_APP_GET_WEATHER_FORECAST_API_KEY);
   }, []);
 
-  const changeCity = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newlySelectedCity = cities.find(
-      (city) => city.name === e.target.value
-    );
-    setSelectedCity(newlySelectedCity);
+  const changeCity = () => {
+    const newlySelectedCity = cities.find((city) => city.name === searchName);
     if (newlySelectedCity) {
-      const { longitude, latitude } = newlySelectedCity.coordinates;
-      fetchWeatherForecast(latitude, longitude);
-    }
+      setSelectedCity(newlySelectedCity);
+      if (newlySelectedCity) {
+        const { longitude, latitude } = newlySelectedCity.coordinates;
+        fetchWeatherForecast(latitude, longitude);
+      }
+    } else alert(`${searchName} not found.`);
   };
+
+  const changeSearchName = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setSearchName(e.target.value);
 
   return (
     <div className={styles.App}>
       <header className="App-header">
         <h1>Weather Forecaster</h1>
-        <CitySearchBar
-          value={selectedCity?.name || ""}
-          onChange={changeCity}
-          options={cityNames}
-          label="Pick a city: "
-          error={error}
-        />
+        {isLoadingCities ? (
+          <LoadingSpinner />
+        ) : (
+          <CitySearchBar
+            value={searchName}
+            onType={changeSearchName}
+            onSelect={changeCity}
+            options={cityNames}
+            label="Pick a city: "
+            error={error}
+            isLoadingWeatherForecast={isLoadingWeatherForecast}
+          />
+        )}
       </header>
     </div>
   );
