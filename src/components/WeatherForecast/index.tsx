@@ -14,7 +14,7 @@ const DayContainer = styled.div`
 
 const MaxMinTemperatures = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
 
 const DayTitle = styled.div`
