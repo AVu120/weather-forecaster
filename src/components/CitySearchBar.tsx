@@ -17,8 +17,8 @@ const CitySearchBar = ({ value, options, onChange, label }: Props) => {
         onChange={onChange}
       />
       <datalist id="city-search-bar-list">
-        {options.map((optionValue) => (
-          <option value={optionValue} />
+        {options.map((option) => (
+          <option value={option} key={option} />
         ))}
       </datalist>
     </>

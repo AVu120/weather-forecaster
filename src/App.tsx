@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CitySearchBar from "components/CitySearchBar";
+import { City } from "types/city";
+import { getCities, mockedGetCitiesApiResponse } from "services/city";
 import styles from "./App.module.scss";
 
 // ACCEPTANCE CRITERIA:
@@ -17,22 +19,49 @@ import styles from "./App.module.scss";
 // 7. Explain why cypress e2e test would be overkill here (e.g. reliance on 3rd api, not much we can assert on that Component test hasn't covered).
 // 8. Add Cypress visual test
 
-const cityOptions = ["Paris", "Sydney", "New York", "London"];
-
+// City object with unneeded properties removed.
+type FilteredCity = Pick<City, "name" | "coordinates">;
 function App() {
-  const [city, setCity] = useState("");
+  const [selectedCity, setSelectedCity] = useState<FilteredCity | undefined>(
+    undefined
+  );
+  const [cities, setCities] = useState<FilteredCity[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const changeCity = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setCity(e.target.value);
+  const cityNames = cities.map((city) => city.name);
+
+  const fetchCities = async () => {
+    try {
+      // const cities = await getCities();
+      const cities = mockedGetCitiesApiResponse;
+      setCities(
+        cities.map((city) => ({
+          name: city.name,
+          coordinates: city.coordinates,
+        }))
+      );
+    } catch (error) {
+      setError(JSON.stringify(error));
+    }
+  };
+  useEffect(() => {
+    console.log("Mock GET CITIES API FIRED");
+    fetchCities();
+  }, []);
+
+  const changeCity = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedCity(cities.find((city) => city.name === e.target.value));
+  };
 
   return (
     <div className={styles.App}>
       <header className="App-header">
         <h1>Weather Forecaster</h1>
         <CitySearchBar
-          value={city}
+          value={selectedCity?.name || ""}
           onChange={changeCity}
-          options={cityOptions}
+          options={cityNames}
           label="Pick a city: "
         />
       </header>
