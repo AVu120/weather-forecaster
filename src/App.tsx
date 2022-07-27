@@ -4,8 +4,9 @@ import { City } from "types/city";
 import { getCities, mockedGetCitiesApiResponse } from "services/city";
 import styles from "./App.module.scss";
 import { getWeatherForecast } from "services/weather";
-import { FilteredWeatherForecast } from "types/weather";
+import { FilteredListItem, FilteredWeatherForecast } from "types/weather";
 import LoadingSpinner from "components/LoadingSpinner";
+import WeatherStatus from "components/WeatherStatus";
 
 // ACCEPTANCE CRITERIA:
 // - A user can search for any city and get the weather forecast.
@@ -26,11 +27,13 @@ import LoadingSpinner from "components/LoadingSpinner";
 type FilteredCity = Pick<City, "name" | "coordinates">;
 function App() {
   const [searchName, setSearchName] = useState("");
-  const [selectedCity, setSelectedCity] = useState<FilteredCity | undefined>(
-    undefined
-  );
+
   const [weatherForecast, setWeatherForecast] = useState<
     FilteredWeatherForecast | undefined
+  >();
+
+  const [weatherStatus, setWeatherStatus] = useState<
+    FilteredListItem | undefined
   >();
   const [cities, setCities] = useState<FilteredCity[]>([]);
   const [isLoadingCities, setIsLoadingCities] = useState(false);
@@ -61,7 +64,7 @@ function App() {
     try {
       setIsLoadingWeatherForecast(true);
       const weatherForecast = await getWeatherForecast(latitude, longitude);
-      const FilteredWeatherForecast = {
+      const filteredWeatherForecast = {
         ...weatherForecast,
         list: weatherForecast.list.map(
           ({ main, weather, wind, pop, dt_txt }) => ({
@@ -74,7 +77,8 @@ function App() {
           })
         ),
       };
-      setWeatherForecast(FilteredWeatherForecast);
+      setWeatherForecast(filteredWeatherForecast);
+      setWeatherStatus(filteredWeatherForecast.list[0]);
     } catch (error) {
       setError("Error: failed to fetch weather forecast.");
     } finally {
@@ -91,11 +95,8 @@ function App() {
   const changeCity = () => {
     const newlySelectedCity = cities.find((city) => city.name === searchName);
     if (newlySelectedCity) {
-      setSelectedCity(newlySelectedCity);
-      if (newlySelectedCity) {
-        const { longitude, latitude } = newlySelectedCity.coordinates;
-        fetchWeatherForecast(latitude, longitude);
-      }
+      const { longitude, latitude } = newlySelectedCity.coordinates;
+      fetchWeatherForecast(latitude, longitude);
     } else alert(`${searchName} not found.`);
   };
 
@@ -104,7 +105,7 @@ function App() {
 
   return (
     <div className={styles.App}>
-      <header className="App-header">
+      <div className={styles.content}>
         <h1>Weather Forecaster</h1>
         {isLoadingCities ? (
           <LoadingSpinner />
@@ -119,7 +120,12 @@ function App() {
             isLoadingWeatherForecast={isLoadingWeatherForecast}
           />
         )}
-      </header>
+        {isLoadingWeatherForecast ? (
+          <LoadingSpinner />
+        ) : (
+          weatherStatus && <WeatherStatus weatherForecast={weatherStatus} />
+        )}
+      </div>
     </div>
   );
 }

@@ -69,7 +69,7 @@ export interface WeatherForecast {
   city: City;
 }
 
-interface FilteredListItem {
+export interface FilteredListItem {
   temperature: number;
   precipitation: number;
   humidity: number;

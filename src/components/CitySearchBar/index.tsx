@@ -1,4 +1,5 @@
 import styles from "./index.module.scss";
+import styled from "styled-components";
 
 interface Props {
   value: string;
@@ -10,6 +11,15 @@ interface Props {
   isLoadingWeatherForecast: boolean;
 }
 
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
+`;
+
+const Label = styled.label`
+  margin-right: 5px;
+`;
 const CitySearchBar = ({
   value,
   options,
@@ -20,12 +30,8 @@ const CitySearchBar = ({
   isLoadingWeatherForecast,
 }: Props) => {
   return (
-    <div className={styles.container}>
-      {label && (
-        <label className={styles.label} htmlFor="city-search-bar">
-          {label}
-        </label>
-      )}
+    <Container>
+      {label && <Label htmlFor="city-search-bar">{label}</Label>}
       <div className={styles.inputContainer}>
         <input
           list="city-search-bar-list"
@@ -48,7 +54,7 @@ const CitySearchBar = ({
       >
         Get Forecast
       </button>
-    </div>
+    </Container>
   );
 };
 

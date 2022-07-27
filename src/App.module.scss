@@ -8,3 +8,9 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
