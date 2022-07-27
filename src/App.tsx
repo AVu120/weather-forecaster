@@ -3,6 +3,8 @@ import CitySearchBar from "components/CitySearchBar";
 import { City } from "types/city";
 import { getCities, mockedGetCitiesApiResponse } from "services/city";
 import styles from "./App.module.scss";
+import { getWeatherForecast } from "services/weather";
+import { FilteredWeatherForecast } from "types/weather";
 
 // ACCEPTANCE CRITERIA:
 // - A user can search for any city and get the weather forecast.
@@ -25,9 +27,12 @@ function App() {
   const [selectedCity, setSelectedCity] = useState<FilteredCity | undefined>(
     undefined
   );
+  const [weatherForecast, setWeatherForecast] = useState<
+    FilteredWeatherForecast | undefined
+  >();
   const [cities, setCities] = useState<FilteredCity[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [isLoadingCities, setIsLoadingCities] = useState(false);
+  const [error, setError] = useState<string | undefined>(undefined);
 
   const cityNames = cities.map((city) => city.name);
 
@@ -35,23 +40,53 @@ function App() {
     try {
       // const cities = await getCities();
       const cities = mockedGetCitiesApiResponse;
-      setCities(
-        cities.map((city) => ({
-          name: city.name,
-          coordinates: city.coordinates,
-        }))
-      );
+      const filteredCities = cities.map((city) => ({
+        name: city.name,
+        coordinates: city.coordinates,
+      }));
+      setCities(filteredCities);
     } catch (error) {
-      setError(JSON.stringify(error));
+      setError("Error: failed to fetch cities.");
     }
   };
+
+  const fetchWeatherForecast = async (latitude: number, longitude: number) => {
+    try {
+      const weatherForecast = await getWeatherForecast(latitude, longitude);
+      const FilteredWeatherForecast = {
+        ...weatherForecast,
+        list: weatherForecast.list.map(
+          ({ main, weather, wind, pop, dt_txt }) => ({
+            temperature: main.temp,
+            precipitation: pop,
+            humidity: main.humidity,
+            wind: wind.speed,
+            description: weather[0].description,
+            dateTime: dt_txt,
+          })
+        ),
+      };
+      setWeatherForecast(FilteredWeatherForecast);
+    } catch (error) {
+      setError("Error: failed to fetch weather forecast.");
+    }
+  };
+
   useEffect(() => {
     console.log("Mock GET CITIES API FIRED");
     fetchCities();
+    // console.log(process.env.REACT_APP_GET_WEATHER_FORECAST_API_KEY);
   }, []);
 
   const changeCity = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedCity(cities.find((city) => city.name === e.target.value));
+    const newlySelectedCity = cities.find(
+      (city) => city.name === e.target.value
+    );
+    setSelectedCity(newlySelectedCity);
+    if (newlySelectedCity) {
+      const { longitude, latitude } = newlySelectedCity.coordinates;
+      fetchWeatherForecast(latitude, longitude);
+    }
   };
 
   return (
@@ -63,6 +98,7 @@ function App() {
           onChange={changeCity}
           options={cityNames}
           label="Pick a city: "
+          error={error}
         />
       </header>
     </div>
