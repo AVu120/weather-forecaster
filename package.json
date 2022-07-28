@@ -148,6 +148,9 @@
     ]
   },
   "devDependencies": {
-    "@types/styled-components": "^5.1.25"
+    "@types/jest-axe": "^3.5.4",
+    "@types/styled-components": "^5.1.25",
+    "jest-axe": "^6.0.0",
+    "msw": "^0.44.2"
   }
 }
