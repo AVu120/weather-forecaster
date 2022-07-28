@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
 import CitySearchBar from "components/CitySearchBar";
-import { City } from "types/city";
+import LoadingSpinner from "components/LoadingSpinner";
+import DayForecast from "components/Weather/WeatherForecast/DayForecast";
+import FiveDayForecast from "components/Weather/WeatherForecast/FiveDayForecast";
+import WeatherStatus from "components/Weather/WeatherStatus";
+import { useEffect, useState } from "react";
 import { getCities } from "services/city";
 import { getWeatherForecast } from "services/weather";
-import { FilteredWeatherForecast } from "types/weather";
-import LoadingSpinner from "components/LoadingSpinner";
-import WeatherStatus from "components/Weather/WeatherStatus";
-import FiveDayForecast from "components/Weather/WeatherForecast/FiveDayForecast";
-import DayForecast from "components/Weather/WeatherForecast/DayForecast";
 import styled from "styled-components";
+import { City } from "types/city";
+import { FilteredWeatherForecast } from "types/weather";
 
 // ACCEPTANCE CRITERIA:
 // - A user can search for any city and get the weather forecast.

@@ -1,7 +1,7 @@
-import WeatherIcon from "components/Weather/WeatherIcon";
-import { FilteredListItem } from "types/weather";
-import styled from "styled-components";
 import { Title } from "components/Text/Title";
+import WeatherIcon from "components/Weather/WeatherIcon";
+import styled from "styled-components";
+import { FilteredListItem } from "types/weather";
 
 interface Props {
   weatherStatus: FilteredListItem;

@@ -1,9 +1,9 @@
-import { FilteredWeatherForecast } from "types/weather";
-import styled from "styled-components";
-import { DAYS_OF_WEEK } from "utils/constants";
-import { getMostCommonElement } from "utils";
-import WeatherIcon from "components/Weather/WeatherIcon";
 import { Title } from "components/Text/Title";
+import WeatherIcon from "components/Weather/WeatherIcon";
+import styled from "styled-components";
+import { FilteredWeatherForecast } from "types/weather";
+import { getMostCommonElement } from "utils";
+import { DAYS_OF_WEEK } from "utils/constants";
 
 const Container = styled.div`
   display: flex;

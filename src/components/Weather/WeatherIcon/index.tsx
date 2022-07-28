@@ -1,6 +1,6 @@
-import SunnyIcon from "./Sunny";
-import RainyIcon from "./Rainy";
 import CloudyIcon from "./Cloudy";
+import RainyIcon from "./Rainy";
+import SunnyIcon from "./Sunny";
 
 const WeatherIcon = ({ description }: { description: string }) => {
   if (description.includes("clear")) return <SunnyIcon />;
