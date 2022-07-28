@@ -44,8 +44,6 @@ const DayForecast = ({ weatherForecast, selectedDate }: Props) => {
     dateTime.startsWith(selectedDate)
   );
   return (
-    // This seems to stop causing table horizontal overflow behaviour when converted to styled-component so
-    // I'm leaving this as in-line styling for now.
     <>
       <Title>Selected Day Forecast:</Title>
       <TableContainer>

@@ -1,46 +1,89 @@
-# Getting Started with Create React App
+# Weather Forecaster
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A user can search for any city and get the weather forecast.
+In the search result, a user can see the current weather status and the weather for the next 5 days.
 
-## Available Scripts
+<img width="647" alt="image" src="https://user-images.githubusercontent.com/38395166/181646571-14bbd38b-04e6-4d64-bf44-25a720df4dfc.png">
 
-In the project directory, you can run:
+![2022-07-29 08 21 02](https://user-images.githubusercontent.com/38395166/181647071-f5fa5620-e71b-45c3-8439-da027a1f2cbe.gif)
 
-### `npm start`
+![2022-07-29 08 19 31](https://user-images.githubusercontent.com/38395166/181646910-d365c37a-b869-4711-b6b9-e3770fb5d4b4.gif)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+![2022-07-29 08 19 41](https://user-images.githubusercontent.com/38395166/181646959-858a4c34-fcf0-49db-a3b6-b11d355702d3.gif)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Tech Stack Used
 
-### `npm test`
+- ReactJS
+- TypeScript
+- Styled-Components for styling
+- Native fetch API for making http requests
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## How to Run
 
-### `npm run build`
+- In the root folder of this project, run
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+npm i
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+to install all requirement dependencies.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Then run
 
-### `npm run eject`
+```
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+to start the app.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Access the running app in any browser at `http://localhost:3000`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Note: please try and use Chrome, the native auto-complete input I used has some compatibility issues outside of Chrome (e.g. on Firefox, a double-click is required to show the dropdown & I haven't really tested on other browsers).
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## How to Test
 
-## Learn More
+-- In the root folder of this project, run
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+npm run test
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Then you should see this:
+![image](https://user-images.githubusercontent.com/38395166/181646672-3110abc9-2cf6-4a21-820f-834fbebd514f.png)
+
+## Feedback
+
+I feel like the project went well. I say this because I was able to build an app that meets the acceptance criteria. I was also able to write tests that provide reasonable assurance that any functional regressions would be caught if a refactor or building new features was required.
+
+At a high-level, seeing as there is only one page required I didn't bother creating a /pages directory or use any form of routing. I thought the acceptance criteria could be fulfilled as a single-page-application. Hence, I store all the application state and business logic in the common single parent component that is src/App.tsx.
+
+I split the app into the following 4 sections:
+
+- City Search Bar (let's user enter their desired city).
+- Weather Status (shows that city's current weather status).
+- Five Day Forecast (shows that city's weather forecast over the next 5 days).
+- Day Forecast (shows in-depth forecast of the currently selected day).
+
+Each of these sections lives in their own component as a child-component of src/App.tsx. These are essentially "presentation" components as their only job is to received props and state from their parent component and render it on the user interface. Hence, these components are minimal and contain only markup and some props/state transformation logic to format the props/state into what needs to be displayed on the screen.
+
+I chose this pattern of centralizing all business logic + application state in src/App.tsx because it provides a simple single source of truth of what's happening in the application (business logic), what data is being used (state), and who is receiving what and showing what (child-components/sections).
+
+Considering the acceptance-criteria and time-constraints on my end, I deemed this to be the optimal solution.
+
+I also aimed to make my code as scalable and reusable (to reduce future duplication if other developers were to start working on this) as possible. I did that by putting anything that could be reused into corresponding folders in /src:
+![image](https://user-images.githubusercontent.com/38395166/181648488-ac844a10-ab9d-4bdf-94ea-4803ee6da7d8.png)
+
+This included:
+
+- constants
+- utility functions
+- typescript interfaces & types
+- services (functions that call APIs, this is useful for typing input and output of these functions and then reusing them at scale)
+- mock api responses used in tests.
+
+In regards to tests,
+I thought component tests using React-Testing-Library were sufficient to ensure the acceptance-criteria is still fulfilled if future code-changes are required.
+
+With more time and if use-cases get more complex, adding end-to-end tests & visual tests in CypressJS would be helpful. Using more sophisticated testing tools like Google Chrome's lighthouse would also be beneficial in optimizing performance and accessibility of the application as well.
+
+I wish I could have spent more time on this but I have other commitments and I am traveling overseas all weekend so I literally don't have anymore time to work on this.
