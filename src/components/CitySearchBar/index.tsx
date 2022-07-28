@@ -1,4 +1,3 @@
-import styles from "./index.module.scss";
 import styled from "styled-components";
 
 interface Props {
@@ -23,6 +22,31 @@ const Label = styled.label`
   margin-right: 5px;
   font-size: 1rem;
 `;
+
+const ErrorMessageContainer = styled.div`
+  position: relative;
+`;
+const ErrorMessage = styled.p`
+  color: red;
+  margin: 0;
+  position: absolute;
+  font-size: 1rem;
+`;
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Button = styled.button<{ disabled: boolean }>`
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+  border: none;
+  padding: 5px;
+  background-color: #319795;
+  color: white;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+`;
 const CitySearchBar = ({
   value,
   options,
@@ -35,7 +59,7 @@ const CitySearchBar = ({
   return (
     <Container>
       {label && <Label htmlFor="city-search-bar">{label}</Label>}
-      <div className={styles.inputContainer}>
+      <InputContainer>
         <input
           list="city-search-bar-list"
           name="city-search-bar"
@@ -43,20 +67,20 @@ const CitySearchBar = ({
           value={value}
           onChange={onType}
         />
-        {error && <p className={styles.error}>{error}</p>}
-      </div>
+        {error && (
+          <ErrorMessageContainer>
+            <ErrorMessage>{error}</ErrorMessage>
+          </ErrorMessageContainer>
+        )}
+      </InputContainer>
       <datalist id="city-search-bar-list">
         {options.map((option) => (
           <option value={option} key={option} />
         ))}
       </datalist>
-      <button
-        type="button"
-        onClick={onSelect}
-        disabled={!value || isLoadingWeatherForecast}
-      >
+      <Button onClick={onSelect} disabled={!value || isLoadingWeatherForecast}>
         Get Forecast
-      </button>
+      </Button>
     </Container>
   );
 };

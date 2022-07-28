@@ -58,7 +58,7 @@ function App() {
   const [isLoadingCities, setIsLoadingCities] = useState(false);
   const [isLoadingWeatherForecast, setIsLoadingWeatherForecast] =
     useState(false);
-  const [error, setError] = useState<string | undefined>(undefined);
+  const [error, setError] = useState<string | undefined>();
   const [selectedDate, setSelectedDate] = useState<string | undefined>();
 
   const cityNames = cities.map((city) => city.name);

@@ -13,6 +13,11 @@ const Table = styled.table`
   white-space: nowrap;
 `;
 
+const TableContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
 const Td = styled.td`
   border: 1px solid #dddddd;
   text-align: left;
@@ -38,47 +43,42 @@ const DayForecast = ({ weatherForecast, selectedDate }: Props) => {
   return (
     // This seems to stop causing table horizontal overflow behaviour when converted to styled-component so
     // I'm leaving this as in-line styling for now.
-    <div
-      style={{
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
-      <Title style={{ marginBottom: "1rem" }}>Selected Day Forecast: </Title>
-      <Table>
-        <TitleRow>
-          <Th>Date Time</Th>
-          <Th>Description</Th>
-          <Th>Temperature</Th>
-          <Th>Precipitation</Th>
-          <Th>Humidity</Th>
-          <Th>Wind</Th>
-        </TitleRow>
-        {weatherForecast.list
-          .filter(({ dateTime }) => dateTime.startsWith(selectedDate))
-          .map(
-            ({
-              dateTime,
-              description,
-              humidity,
-              precipitation,
-              temperature,
-              wind,
-            }) => (
-              <tr key={dateTime}>
-                <Td>{dateTime}</Td>
-                <Td>{description}</Td>
-                <Td>{temperature}</Td>
-                <Td>{precipitation}</Td>
-                <Td>{humidity}</Td>
-                <Td>{wind}</Td>
-              </tr>
-            )
-          )}
-      </Table>
-    </div>
+    <>
+      <Title>Selected Day Forecast:</Title>
+      <TableContainer>
+        <Table>
+          <TitleRow>
+            <Th>Date Time</Th>
+            <Th>Description</Th>
+            <Th>Temperature</Th>
+            <Th>Precipitation</Th>
+            <Th>Humidity</Th>
+            <Th>Wind</Th>
+          </TitleRow>
+          {weatherForecast.list
+            .filter(({ dateTime }) => dateTime.startsWith(selectedDate))
+            .map(
+              ({
+                dateTime,
+                description,
+                humidity,
+                precipitation,
+                temperature,
+                wind,
+              }) => (
+                <tr key={dateTime}>
+                  <Td>{dateTime}</Td>
+                  <Td>{description}</Td>
+                  <Td>{temperature}</Td>
+                  <Td>{precipitation}</Td>
+                  <Td>{humidity}</Td>
+                  <Td>{wind}</Td>
+                </tr>
+              )
+            )}
+        </Table>
+      </TableContainer>
+    </>
   );
 };
 
