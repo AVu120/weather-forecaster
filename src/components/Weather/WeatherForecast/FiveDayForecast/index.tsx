@@ -2,7 +2,8 @@ import { FilteredWeatherForecast } from "types/weather";
 import styled from "styled-components";
 import { DAYS_OF_WEEK } from "utils/constants";
 import { getMostCommonElement } from "utils";
-import WeatherIcon from "components/WeatherIcon";
+import WeatherIcon from "components/Weather/WeatherIcon";
+import { Title } from "components/Text/Title";
 
 const Container = styled.div`
   display: flex;
@@ -11,10 +12,17 @@ const Container = styled.div`
   row-gap: 10px;
   justify-content: space-around;
 `;
-const DayContainer = styled.div`
+const DayContainer = styled.div<{ isSelected: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  ${({ isSelected }) =>
+    isSelected &&
+    `border: 1px solid white;
+     border-radius: 5px;
+     padding: 5px;
+     font-weight: bold;`}
+  cursor: pointer;
 `;
 
 const MaxMinTemperatures = styled.div`
@@ -28,17 +36,21 @@ const MinimumTemperature = styled.span`
   color: #bcc0c4;
 `;
 
-const MaximumTemperature = styled.span``;
-
 const DayTitle = styled.div`
   text-align: center;
+  font-size: 16px;
 `;
 
+interface Props {
+  weatherForecast: FilteredWeatherForecast;
+  onSelectDay: (date: string) => void;
+  selectedDate: string;
+}
 const WeatherForecast = ({
   weatherForecast,
-}: {
-  weatherForecast: FilteredWeatherForecast;
-}) => {
+  onSelectDay,
+  selectedDate,
+}: Props) => {
   const fiveDayForecast: any = {};
 
   weatherForecast.list.forEach((listItem) => {
@@ -56,6 +68,7 @@ const WeatherForecast = ({
 
   const fiveDayForecastSummary = Object.keys(fiveDayForecast).map((date) => {
     return {
+      date,
       dayOfWeek: DAYS_OF_WEEK[new Date(date).getUTCDay()],
       condition: getMostCommonElement(fiveDayForecast[date].description),
       minimumTemperature: Math.min(...fiveDayForecast[date].temperature),
@@ -64,24 +77,36 @@ const WeatherForecast = ({
   });
 
   return (
-    <Container>
-      {fiveDayForecastSummary.map(
-        ({ dayOfWeek, condition, minimumTemperature, maximumTemperature }) => (
-          <DayContainer>
-            <DayTitle>{dayOfWeek}</DayTitle>
-            {condition && (
-              <div style={{ textAlign: "center" }}>
-                <WeatherIcon description={condition} />
-              </div>
-            )}
-            <MaxMinTemperatures>
-              <span>{maximumTemperature}°</span>
-              <MinimumTemperature>{minimumTemperature}°</MinimumTemperature>
-            </MaxMinTemperatures>
-          </DayContainer>
-        )
-      )}
-    </Container>
+    <>
+      <Title>5 Day Forecast: </Title>
+      <Container>
+        {fiveDayForecastSummary.map(
+          ({
+            dayOfWeek,
+            condition,
+            minimumTemperature,
+            maximumTemperature,
+            date,
+          }) => (
+            <DayContainer
+              onClick={() => onSelectDay(date.slice(0, 10))}
+              isSelected={date.startsWith(selectedDate)}
+            >
+              <DayTitle>{dayOfWeek}</DayTitle>
+              {condition && (
+                <div style={{ textAlign: "center" }}>
+                  <WeatherIcon description={condition} />
+                </div>
+              )}
+              <MaxMinTemperatures>
+                <span>{maximumTemperature}°</span>
+                <MinimumTemperature>{minimumTemperature}°</MinimumTemperature>
+              </MaxMinTemperatures>
+            </DayContainer>
+          )
+        )}
+      </Container>
+    </>
   );
 };
 

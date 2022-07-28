@@ -21,6 +21,7 @@ const Container = styled.div`
 
 const Label = styled.label`
   margin-right: 5px;
+  font-size: 1rem;
 `;
 const CitySearchBar = ({
   value,

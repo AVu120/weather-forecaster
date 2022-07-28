@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import CitySearchBar from "components/CitySearchBar";
 import { City } from "types/city";
 import { getCities, mockedGetCitiesApiResponse } from "services/city";
-import styles from "./App.module.scss";
 import { getWeatherForecast } from "services/weather";
 import { FilteredListItem, FilteredWeatherForecast } from "types/weather";
 import LoadingSpinner from "components/LoadingSpinner";
-import WeatherStatus from "components/WeatherStatus";
-import WeatherForecast from "components/WeatherForecast";
+import WeatherStatus from "components/Weather/WeatherStatus";
+import FiveDayForecast from "components/Weather/WeatherForecast/FiveDayForecast";
+import DayForecast from "components/Weather/WeatherForecast/DayForecast";
+import styled from "styled-components";
 
 // ACCEPTANCE CRITERIA:
 // - A user can search for any city and get the weather forecast.
@@ -25,6 +26,23 @@ import WeatherForecast from "components/WeatherForecast";
 // 8. Add Cypress visual test
 
 // City object with unneeded properties removed.
+
+const Container = styled.div`
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  padding: 5px;
+  row-gap: 1rem;
+`;
+
+const Title = styled.div`
+  text-align: center;
+`;
 type FilteredCity = Pick<City, "name" | "coordinates">;
 function App() {
   const [searchName, setSearchName] = useState("");
@@ -41,6 +59,7 @@ function App() {
   const [isLoadingWeatherForecast, setIsLoadingWeatherForecast] =
     useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
+  const [selectedDate, setSelectedDate] = useState<string | undefined>();
 
   const cityNames = cities.map((city) => city.name);
 
@@ -80,6 +99,7 @@ function App() {
       };
       setWeatherForecast(filteredWeatherForecast);
       setWeatherStatus(filteredWeatherForecast.list[0]);
+      setSelectedDate(filteredWeatherForecast.list[0].dateTime.slice(0, 10));
     } catch (error) {
       setError("Error: failed to fetch weather forecast.");
     } finally {
@@ -104,35 +124,45 @@ function App() {
   const changeSearchName = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSearchName(e.target.value);
 
+  const changeSelectedDate = (date: string) => setSelectedDate(date);
+
   return (
-    <div className={styles.App}>
-      <div className={styles.content}>
-        <h1 style={{ textAlign: "center" }}>Weather Forecaster</h1>
-        {isLoadingCities ? (
-          <LoadingSpinner />
-        ) : (
-          <CitySearchBar
-            value={searchName}
-            onType={changeSearchName}
-            onSelect={changeCity}
-            options={cityNames}
-            label="Pick a city: "
-            error={error}
-            isLoadingWeatherForecast={isLoadingWeatherForecast}
-          />
-        )}
-        {isLoadingWeatherForecast ? (
-          <LoadingSpinner />
-        ) : (
-          <>
-            {weatherStatus && <WeatherStatus weatherStatus={weatherStatus} />}
-            {weatherForecast && (
-              <WeatherForecast weatherForecast={weatherForecast} />
-            )}
-          </>
-        )}
-      </div>
-    </div>
+    <Container>
+      <Title>Weather Forecaster</Title>
+      {isLoadingCities ? (
+        <LoadingSpinner />
+      ) : (
+        <CitySearchBar
+          value={searchName}
+          onType={changeSearchName}
+          onSelect={changeCity}
+          options={cityNames}
+          label="Pick a city: "
+          error={error}
+          isLoadingWeatherForecast={isLoadingWeatherForecast}
+        />
+      )}
+      {isLoadingWeatherForecast ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          {weatherStatus && <WeatherStatus weatherStatus={weatherStatus} />}
+          {weatherForecast && selectedDate && (
+            <>
+              <FiveDayForecast
+                weatherForecast={weatherForecast}
+                onSelectDay={changeSelectedDate}
+                selectedDate={selectedDate}
+              />
+              <DayForecast
+                weatherForecast={weatherForecast}
+                selectedDate={selectedDate}
+              />
+            </>
+          )}
+        </>
+      )}
+    </Container>
   );
 }
 

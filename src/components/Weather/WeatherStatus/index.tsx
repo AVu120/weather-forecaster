@@ -1,6 +1,7 @@
-import WeatherIcon from "components/WeatherIcon";
+import WeatherIcon from "components/Weather/WeatherIcon";
 import { FilteredListItem } from "types/weather";
 import styled from "styled-components";
+import { Title } from "components/Text/Title";
 
 interface Props {
   weatherStatus: FilteredListItem;
@@ -31,19 +32,22 @@ const Conditions = styled.div`
 `;
 
 const WeatherStatus = ({ weatherStatus }: Props) => {
-  const { temperature, precipitation, humidity, wind, description, dateTime } =
+  const { temperature, precipitation, humidity, wind, description } =
     weatherStatus;
   return (
-    <Container>
-      <WeatherIcon description={description} />
-      <CurrentTemperature>{temperature}</CurrentTemperature>
-      <CelsiusIcon>°C</CelsiusIcon>
-      <Conditions>
-        <div>Precipitation: {precipitation}%</div>
-        <div>Humidity: {humidity}%</div>
-        <div>Wind: {wind}%</div>
-      </Conditions>
-    </Container>
+    <div>
+      <Title>Current weather:</Title>
+      <Container>
+        <WeatherIcon description={description} />
+        <CurrentTemperature>{temperature}</CurrentTemperature>
+        <CelsiusIcon>°C</CelsiusIcon>
+        <Conditions>
+          <div>Precipitation: {precipitation}%</div>
+          <div>Humidity: {humidity}%</div>
+          <div>Wind: {wind}%</div>
+        </Conditions>
+      </Container>
+    </div>
   );
 };
 
