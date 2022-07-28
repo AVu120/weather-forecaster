@@ -5,6 +5,7 @@ import { Title } from "components/Text/Title";
 
 interface Props {
   weatherStatus: FilteredListItem;
+  cityName: string;
 }
 
 const CurrentTemperature = styled.span`
@@ -31,12 +32,12 @@ const Conditions = styled.div`
   font-size: 12px;
 `;
 
-const WeatherStatus = ({ weatherStatus }: Props) => {
+const WeatherStatus = ({ weatherStatus, cityName }: Props) => {
   const { temperature, precipitation, humidity, wind, description } =
     weatherStatus;
   return (
     <div>
-      <Title>Current weather:</Title>
+      <Title>{cityName}'s Current Weather:</Title>
       <Container>
         <WeatherIcon description={description} />
         <CurrentTemperature>{temperature}</CurrentTemperature>

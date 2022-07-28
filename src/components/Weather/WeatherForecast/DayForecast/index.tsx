@@ -40,6 +40,9 @@ interface Props {
   selectedDate: string;
 }
 const DayForecast = ({ weatherForecast, selectedDate }: Props) => {
+  const dayForecast = weatherForecast.list.filter(({ dateTime }) =>
+    dateTime.startsWith(selectedDate)
+  );
   return (
     // This seems to stop causing table horizontal overflow behaviour when converted to styled-component so
     // I'm leaving this as in-line styling for now.
@@ -47,17 +50,18 @@ const DayForecast = ({ weatherForecast, selectedDate }: Props) => {
       <Title>Selected Day Forecast:</Title>
       <TableContainer>
         <Table>
-          <TitleRow>
-            <Th>Date Time</Th>
-            <Th>Description</Th>
-            <Th>Temperature</Th>
-            <Th>Precipitation</Th>
-            <Th>Humidity</Th>
-            <Th>Wind</Th>
-          </TitleRow>
-          {weatherForecast.list
-            .filter(({ dateTime }) => dateTime.startsWith(selectedDate))
-            .map(
+          <thead>
+            <TitleRow>
+              <Th>Date Time</Th>
+              <Th>Description</Th>
+              <Th>Temperature</Th>
+              <Th>Precipitation</Th>
+              <Th>Humidity</Th>
+              <Th>Wind</Th>
+            </TitleRow>
+          </thead>
+          <tbody>
+            {dayForecast.map(
               ({
                 dateTime,
                 description,
@@ -66,7 +70,7 @@ const DayForecast = ({ weatherForecast, selectedDate }: Props) => {
                 temperature,
                 wind,
               }) => (
-                <tr key={dateTime}>
+                <tr key={`${dateTime}-day-forecast`}>
                   <Td>{dateTime}</Td>
                   <Td>{description}</Td>
                   <Td>{temperature}</Td>
@@ -76,6 +80,7 @@ const DayForecast = ({ weatherForecast, selectedDate }: Props) => {
                 </tr>
               )
             )}
+          </tbody>
         </Table>
       </TableContainer>
     </>

@@ -3,7 +3,7 @@ import CitySearchBar from "components/CitySearchBar";
 import { City } from "types/city";
 import { getCities } from "services/city";
 import { getWeatherForecast } from "services/weather";
-import { FilteredListItem, FilteredWeatherForecast } from "types/weather";
+import { FilteredWeatherForecast } from "types/weather";
 import LoadingSpinner from "components/LoadingSpinner";
 import WeatherStatus from "components/Weather/WeatherStatus";
 import FiveDayForecast from "components/Weather/WeatherForecast/FiveDayForecast";
@@ -104,9 +104,7 @@ function App() {
   };
 
   useEffect(() => {
-    console.log("Mock GET CITIES API FIRED");
     fetchCities();
-    // console.log(process.env.REACT_APP_GET_WEATHER_FORECAST_API_KEY);
   }, []);
 
   const changeCity = () => {

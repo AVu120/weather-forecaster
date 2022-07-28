@@ -1,7 +1,7 @@
 export const getMostCommonElement = (array: string[]) => {
   if (array.length === 0) return null;
-  var modeMap: any = {};
-  var maxEl = array[0],
+  const modeMap: any = {};
+  let maxEl = array[0],
     maxCount = 1;
   for (var i = 0; i < array.length; i++) {
     var el = array[i];

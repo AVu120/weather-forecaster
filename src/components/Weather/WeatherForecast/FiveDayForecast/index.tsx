@@ -46,7 +46,7 @@ interface Props {
   onSelectDay: (date: string) => void;
   selectedDate: string;
 }
-const WeatherForecast = ({
+const FiveDayForecast = ({
   weatherForecast,
   onSelectDay,
   selectedDate,
@@ -91,6 +91,7 @@ const WeatherForecast = ({
             <DayContainer
               onClick={() => onSelectDay(date.slice(0, 10))}
               isSelected={date.startsWith(selectedDate)}
+              key={`${date}-weather-summary`}
             >
               <DayTitle>{dayOfWeek}</DayTitle>
               {condition && (
@@ -110,4 +111,4 @@ const WeatherForecast = ({
   );
 };
 
-export default WeatherForecast;
+export default FiveDayForecast;

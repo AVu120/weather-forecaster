@@ -7,7 +7,7 @@ export const getWeatherForecast = (
   lon: number
 ): Promise<WeatherForecast> =>
   fetch(
-    `https://${process.env.REACT_APP_GET_WEATHER_FORECAST_API_HOST}/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_GET_WEATHER_FORECAST_API_KEY}`
+    `https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_GET_WEATHER_FORECAST_API_KEY}`
   ).then((r) => r.json());
 
 export {};
