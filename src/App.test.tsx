@@ -3,7 +3,11 @@ import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import { axe } from "jest-axe";
 import App from "./App";
 import { mockGetCitiesApiHandler } from "mocks/city";
-import { mockGetWeatherForecastApiHandler } from "mocks/weather";
+import {
+  mockGetWeatherForecastApiHandler,
+  mockInstanbulWeatherForecast,
+  mockShanghaiWeatherForecast,
+} from "mocks/weather";
 
 // This configures a request mocking server with the given request handlers.
 const server = setupServer(...[mockGetCitiesApiHandler]);
@@ -100,35 +104,87 @@ test("See error message if GET Weather Forecast API returns error", async () => 
   });
 });
 
-// test("Can get weather forecast of multiple cities", async () => {
-//   server.use(mockGetWeatherForecastApiHandler({ isThrowingError: false }));
+test("Can get weather forecast of multiple cities", async () => {
+  server.use(mockGetWeatherForecastApiHandler({ isThrowingError: false }));
 
-//   const pickACityLabel = "Pick a city:";
-//   const { container } = render(<App />);
+  const pickACityLabel = "Pick a city:";
+  const { container } = render(<App />);
 
-//   // Assert that response to GET /cities api request has been received.
-//   await waitFor(() => {
-//     expect(screen.getByLabelText(pickACityLabel)).toBeInTheDocument();
-//   });
+  // Assert that response to GET /cities api request has been received.
+  await waitFor(() => {
+    expect(screen.getByLabelText(pickACityLabel)).toBeInTheDocument();
+  });
 
-//   const citySearchInput = screen.getByLabelText(pickACityLabel);
-//   const getForecastButton = screen.getByRole("button", {
-//     name: "Get Forecast",
-//   });
+  const citySearchInput = screen.getByLabelText(pickACityLabel);
+  const getForecastButton = screen.getByRole("button", {
+    name: "Get Forecast",
+  });
 
-//   fireEvent.change(citySearchInput, { target: { value: "Shanghai" } });
-//   await waitFor(() => {
-//     expect(citySearchInput).toHaveDisplayValue("Shanghai");
-//   });
-//   fireEvent.click(getForecastButton);
+  fireEvent.change(citySearchInput, { target: { value: "Shanghai" } });
+  await waitFor(() => {
+    expect(citySearchInput).toHaveDisplayValue("Shanghai");
+  });
+  fireEvent.click(getForecastButton);
 
-//   await waitFor(() => {
-//     expect(screen.getByText("Shanghai's Current Weather:")).toBeInTheDocument();
-//   });
+  await waitFor(() => {
+    expect(screen.getByText("Shanghai's Current Weather:")).toBeInTheDocument();
+  });
 
-//   expect(screen.getByText("5 Day Forecast:")).toBeInTheDocument();
-//   expect(screen.getByText("Selected Day Forecast:")).toBeInTheDocument();
-//   // expect(screen.getAllText())
+  expect(screen.getByText("5 Day Forecast:")).toBeInTheDocument();
+  expect(screen.getByText("Selected Day Forecast:")).toBeInTheDocument();
 
-//   expect(await axe(container)).toHaveNoViolations();
-// });
+  // Assert that returned data is displaying in the 'Selected Day Forecast' table
+  expect(
+    screen.getByText(mockShanghaiWeatherForecast.list[0].dt_txt)
+  ).toBeInTheDocument();
+
+  // Daily forecasts in the '5 Day Forecast'
+  const shanghaiDaySummaries = screen.getAllByTestId("day-weather-summary");
+
+  // Click last one
+  fireEvent.click(shanghaiDaySummaries[shanghaiDaySummaries.length - 1]);
+
+  // Assert that data for the last day shows in the 'Selected Day Forecast' table
+  await waitFor(() => {
+    expect(
+      screen.getByText(
+        mockShanghaiWeatherForecast.list[
+          mockShanghaiWeatherForecast.list.length - 1
+        ].dt_txt
+      )
+    ).toBeInTheDocument();
+  });
+
+  fireEvent.change(citySearchInput, { target: { value: "Istanbul" } });
+  await waitFor(() => {
+    expect(citySearchInput).toHaveDisplayValue("Istanbul");
+  });
+  fireEvent.click(getForecastButton);
+
+  await waitFor(() => {
+    expect(screen.getByText("Istanbul's Current Weather:")).toBeInTheDocument();
+  });
+
+  // Assert that returned data is displaying in the 'Selected Day Forecast' table
+  expect(
+    screen.getByText(mockInstanbulWeatherForecast.list[0].dt_txt)
+  ).toBeInTheDocument();
+
+  // Daily forecasts in the '5 Day Forecast'
+  const instanbulDaySummaries = screen.getAllByTestId("day-weather-summary");
+
+  // Click last one
+  fireEvent.click(instanbulDaySummaries[instanbulDaySummaries.length - 1]);
+
+  // Assert that data for the last day shows in the 'Selected Day Forecast' table
+  await waitFor(() => {
+    expect(
+      screen.getByText(
+        mockInstanbulWeatherForecast.list[
+          mockInstanbulWeatherForecast.list.length - 1
+        ].dt_txt
+      )
+    ).toBeInTheDocument();
+  });
+  expect(await axe(container)).toHaveNoViolations();
+});

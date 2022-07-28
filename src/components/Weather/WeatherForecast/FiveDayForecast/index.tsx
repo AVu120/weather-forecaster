@@ -92,6 +92,7 @@ const FiveDayForecast = ({
               onClick={() => onSelectDay(date.slice(0, 10))}
               isSelected={date.startsWith(selectedDate)}
               key={`${date}-weather-summary`}
+              data-testid="day-weather-summary"
             >
               <DayTitle>{dayOfWeek}</DayTitle>
               {condition && (

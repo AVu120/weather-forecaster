@@ -1509,7 +1509,7 @@ export const mockShanghaiWeatherForecast = {
   },
 };
 
-const mockInstanbulWeatherForecast = {
+export const mockInstanbulWeatherForecast = {
   cod: "200",
   message: 0,
   cnt: 40,
