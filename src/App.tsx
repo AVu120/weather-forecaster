@@ -66,8 +66,8 @@ function App() {
   const fetchCities = async () => {
     try {
       setIsLoadingCities(true);
-      // const cities = await getCities();
-      const cities = mockedGetCitiesApiResponse;
+      const cities = await getCities();
+      // const cities = mockedGetCitiesApiResponse;
       const filteredCities = cities.map((city) => ({
         name: city.name,
         coordinates: city.coordinates,
