@@ -136,7 +136,11 @@
       "jest-watch-typeahead/filename",
       "jest-watch-typeahead/testname"
     ],
-    "resetMocks": true
+    "resetMocks": true,
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ]
   },
   "babel": {
     "presets": [
