@@ -20,6 +20,7 @@ In the search result, a user can see the current weather status and the weather 
 
 ## How to Run
 
+- Add the .env file that I will send to you personally to the root of this project directory.
 - In the root folder of this project, run
 
 ```
