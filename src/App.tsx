@@ -107,7 +107,7 @@ function App() {
   return (
     <div className={styles.App}>
       <div className={styles.content}>
-        <h1>Weather Forecaster</h1>
+        <h1 style={{ textAlign: "center" }}>Weather Forecaster</h1>
         {isLoadingCities ? (
           <LoadingSpinner />
         ) : (

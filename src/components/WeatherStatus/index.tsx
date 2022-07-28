@@ -1,6 +1,4 @@
-import SunnyIcon from "components/WeatherIcons/Clear";
-import CloudyIcon from "components/WeatherIcons/Cloudy";
-import RainyIcon from "components/WeatherIcons/Rainy";
+import WeatherIcon from "components/WeatherIcon";
 import { FilteredListItem } from "types/weather";
 import styled from "styled-components";
 
@@ -32,17 +30,12 @@ const Conditions = styled.div`
   font-size: 12px;
 `;
 
-const Icon = ({ description }: { description: string }) => {
-  if (description.includes("clear")) return <SunnyIcon />;
-  if (description.includes("rain")) return <RainyIcon />;
-  return <CloudyIcon />;
-};
 const WeatherStatus = ({ weatherStatus }: Props) => {
   const { temperature, precipitation, humidity, wind, description, dateTime } =
     weatherStatus;
   return (
     <Container>
-      <Icon description={description} />
+      <WeatherIcon description={description} />
       <CurrentTemperature>{temperature}</CurrentTemperature>
       <CelsiusIcon>°C</CelsiusIcon>
       <Conditions>
