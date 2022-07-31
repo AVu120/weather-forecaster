@@ -22,10 +22,12 @@ The app is responsively designed to be usable in mobile too. However, due to tim
 
 ## How to Run
 
-- Add the .env file that I will send to you personally to the root of this project directory.
-- In the root folder of this project, run
+- Add the .env file that I will send to you personally to /server/.env.
 
 ```
+cd client
+npm i
+cd ../server
 npm i
 ```
 
@@ -34,7 +36,15 @@ to install all requirement dependencies.
 - Then run
 
 ```
+cd client
 npm start
+```
+
+and on a different terminal run
+
+```
+cd server
+npm run dev
 ```
 
 to start the app.
@@ -45,7 +55,7 @@ Note: please try and use Chrome, the native auto-complete input I used has some 
 
 ## How to Test
 
--- In the root folder of this project, run
+-- In /client, run
 
 ```
 npm run test
@@ -77,6 +87,7 @@ I also aimed to make my code as scalable and reusable (to reduce future duplicat
 ![image](https://user-images.githubusercontent.com/38395166/181648488-ac844a10-ab9d-4bdf-94ea-4803ee6da7d8.png)
 
 This included:
+
 - reusable UI components
 - constants
 - utility functions
