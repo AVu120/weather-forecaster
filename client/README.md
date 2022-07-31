@@ -11,6 +11,8 @@ In the search result, a user can see the current weather status and the weather 
 
 ![2022-07-29 08 19 41](https://user-images.githubusercontent.com/38395166/181646959-858a4c34-fcf0-49db-a3b6-b11d355702d3.gif)
 
+The app is responsively designed to be usable in mobile too. However, due to time constraints, I could not test mobile edge cases outside of the browser.
+
 ## Tech Stack Used
 
 - ReactJS
@@ -75,7 +77,7 @@ I also aimed to make my code as scalable and reusable (to reduce future duplicat
 ![image](https://user-images.githubusercontent.com/38395166/181648488-ac844a10-ab9d-4bdf-94ea-4803ee6da7d8.png)
 
 This included:
-
+- reusable UI components
 - constants
 - utility functions
 - typescript interfaces & types
@@ -83,8 +85,8 @@ This included:
 - mock api responses used in tests.
 
 In regards to tests,
-I thought component tests using React-Testing-Library were sufficient to ensure the acceptance-criteria is still fulfilled if future code-changes are required.
+I thought component tests using React-Testing-Library and Mock-Service-Worker (to intercept real HTTP requests and mock the response from the server) were sufficient to ensure the acceptance-criteria is still fulfilled if future code-changes are required.
 
 With more time and if use-cases get more complex, adding end-to-end tests & visual tests in CypressJS would be helpful. Using more sophisticated testing tools like Google Chrome's lighthouse would also be beneficial in optimizing performance and accessibility of the application as well.
 
-I wish I could have spent more time on this but I have other commitments and I am traveling overseas all weekend so I literally don't have anymore time to work on this.
+Note I wrote a TODO list in comments in app.tsx to give you a overview of how I break large pieces of work into smaller ones than progress through them. I don't think I completed everything on the todo list but I think the main acceptance criteria for this task was met. I wish I could have spent more time on this to do more but I am unable to do so due to other commitments and I will be traveling overseas all weekend.
