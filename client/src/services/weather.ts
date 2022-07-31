@@ -7,7 +7,9 @@ export const getWeatherForecast = (
   lon: number
 ): Promise<WeatherForecast> =>
   fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_GET_WEATHER_FORECAST_API_KEY}`
+    process.env.NODE_ENV === "development"
+      ? `http://localhost:5000/api/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_GET_WEATHER_FORECAST_API_KEY}`
+      : `/api/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_GET_WEATHER_FORECAST_API_KEY}`
   ).then((r) => r.json());
 
 export {};

@@ -5,6 +5,7 @@ import FiveDayForecast from "components/Weather/WeatherForecast/FiveDayForecast"
 import WeatherStatus from "components/Weather/WeatherStatus";
 import { useEffect, useState } from "react";
 import { getCities } from "services/city";
+import { mockedGetCitiesApiResponse } from "mocks/city";
 import { getWeatherForecast } from "services/weather";
 import styled from "styled-components";
 import { City } from "types/city";
@@ -62,7 +63,9 @@ function App() {
   const fetchCities = async () => {
     try {
       setIsLoadingCities(true);
+      // const cities = mockedGetCitiesApiResponse;
       const cities = await getCities();
+
       const filteredCities = cities.map((city) => ({
         name: city.name,
         coordinates: city.coordinates,
