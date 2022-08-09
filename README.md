@@ -76,6 +76,8 @@ Then you should see this:
 
 - Ask me for it and I'll give them to you if you want to run this app locally in development mode. On Heroku, they're stored as environment variables in the nodejs backend server.
 
+Note: Any API keys accidentally committed in previous commits (coding at 3am is a bad idea) (but no longer present in the HEAD commit of any branch) have been invalidated & deleted long ago (meaning they're no longer usable).
+
 ## Feedback
 
 ### Client
