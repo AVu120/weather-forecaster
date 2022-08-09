@@ -100,4 +100,4 @@ I thought component tests using React-Testing-Library and Mock-Service-Worker (t
 
 With more time and if use-cases get more complex, adding end-to-end tests & visual tests in CypressJS would be helpful. Using more sophisticated testing tools like Google Chrome's lighthouse would also be beneficial in optimizing performance and accessibility of the application as well.
 
-Note I wrote a TODO list in comments in app.tsx to give you a overview of how I break large pieces of work into smaller ones than progress through them. I don't think I completed everything on the todo list but I think the main acceptance criteria for this task was met. I wish I could have spent more time on this to do more but I am unable to do so due to other commitments and I will be traveling overseas all weekend.
+Note I wrote a TODO list in comments in app.tsx to give you a overview of how I break large pieces of work into smaller ones than progress through them. I don't think I completed everything on the todo list but I think the main acceptance criteria for this task was met.
