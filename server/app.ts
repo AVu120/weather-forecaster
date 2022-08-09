@@ -1,7 +1,8 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
-import cors from "cors";
+// import cors from "cors";
 import fetch from "node-fetch";
+import path from "path";
 
 dotenv.config();
 
@@ -9,7 +10,12 @@ const app = express();
 const port = process.env.PORT;
 
 // Enable only in local dev, i.e., comment out in production.
-app.use(cors());
+// app.use(cors());
+
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname, "..", "..", "client", "build/index.html"));
+});
+app.use(express.static(path.join(__dirname, "..", "..", "client", "build")));
 
 const getCitiesOptions = {
   method: "GET",
