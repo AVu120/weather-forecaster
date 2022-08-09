@@ -8,8 +8,8 @@ export const getWeatherForecast = (
 ): Promise<WeatherForecast> =>
   fetch(
     process.env.NODE_ENV === "development"
-      ? `http://localhost:5000/api/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_GET_WEATHER_FORECAST_API_KEY}`
-      : `/api/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_GET_WEATHER_FORECAST_API_KEY}`
+      ? `http://localhost:5000/api/weather?lat=${lat}&lon=${lon}`
+      : `/api/weather?lat=${lat}&lon=${lon}`
   ).then((r) => r.json());
 
 export {};

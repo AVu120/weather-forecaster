@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "client-dev": "cd client && npm i && npm start",
+    "server-dev": "cd server && npm i && npm run dev",
     "build": "cd client && npm i && npm run build && cd ../server && npm i",
     "start": "cd server && npm start"
   },
