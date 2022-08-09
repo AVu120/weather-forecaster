@@ -15,41 +15,44 @@ The app is responsively designed to be usable in mobile too. However, due to tim
 
 ## Tech Stack Used
 
+Frontend:
+
 - ReactJS
 - TypeScript
 - Styled-Components for styling
 - Native fetch API for making http requests
 
+Backend:
+
+- Node.js
+- Express
+- TypeScript
+- Node-fetch for making http requests
+
 ## How to Run
 
-- Add the .env file that I will send to you personally to /server/.env.
+In development mode:
+
+- Add the .env file that I will send to you personally to /server/.env
+- Then in the root directory, run
 
 ```
-cd client
-npm i
-cd ../server
-npm i
+npm run client-dev
+npm run server-dev
 ```
 
-to install all requirement dependencies.
+- Access the running app in any browser at `http://localhost:3000`
 
-- Then run
+In production mode:
+
+- Add the .env file that I will send to you personally to /server/.env. - - Then in the root directory, run
 
 ```
-cd client
+npm run build
 npm start
 ```
 
-and on a different terminal run
-
-```
-cd server
-npm run dev
-```
-
-to start the app.
-
-- Access the running app in any browser at `http://localhost:3000`.
+- Access the running app in any browser at `http://localhost:5000`.
 
 Note: please try and use Chrome, the native auto-complete input I used has some compatibility issues outside of Chrome (e.g. on Firefox, a double-click is required to show the dropdown & I haven't really tested on other browsers).
 
@@ -65,6 +68,8 @@ Then you should see this:
 ![image](https://user-images.githubusercontent.com/38395166/181646672-3110abc9-2cf6-4a21-820f-834fbebd514f.png)
 
 ## Feedback
+
+### Client
 
 I feel like the project went well. I say this because I was able to build an app that meets the acceptance criteria. I was also able to write tests that provide reasonable assurance that any functional regressions would be caught if a refactor or building new features was required.
 
@@ -101,3 +106,9 @@ I thought component tests using React-Testing-Library and Mock-Service-Worker (t
 With more time and if use-cases get more complex, adding end-to-end tests & visual tests in CypressJS would be helpful. Using more sophisticated testing tools like Google Chrome's lighthouse would also be beneficial in optimizing performance and accessibility of the application as well.
 
 Note I wrote a TODO list in comments in app.tsx to give you a overview of how I break large pieces of work into smaller ones than progress through them. I don't think I completed everything on the todo list but I think the main acceptance criteria for this task was met.
+
+### Backend
+
+I set up a simple NodeJS-Express server mainly to store the API keys as environment variables in the NodeJS server. Hence, securing the app by making these API keys inaccessible on the client.
+
+Due to the simple requirements of the APIs and time constraints, I thought one app.ts file would be sufficient for the backend.
