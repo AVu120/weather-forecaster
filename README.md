@@ -67,6 +67,15 @@ npm run test
 Then you should see this:
 ![image](https://user-images.githubusercontent.com/38395166/181646672-3110abc9-2cf6-4a21-820f-834fbebd514f.png)
 
+## APIs
+
+- To fetch the list of cities (and corresponding values for long/lat), I use the GET autocomplete places API in https://rapidapi.com/Spott/api/spott/.
+- To fetch the weather forecast for each city, I use https://openweathermap.org/forecast5.
+
+### Where the API keys?
+
+- Ask me for it and I'll give them to you if you want to run this app locally in development mode. On Heroku, they're stored as environment variables in the nodejs backend server.
+
 ## Feedback
 
 ### Client

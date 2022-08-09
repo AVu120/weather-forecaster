@@ -41,8 +41,7 @@ app.get("/api/cities", async (req: Request, res: Response) => {
 app.get("/api/weather", async (req: Request, res: Response) => {
   const { lat, lon } = req.query;
   const response = await fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.GET_WEATHER_FORECAST_API_KEY}`,
-    getCitiesOptions
+    `https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.GET_WEATHER_FORECAST_API_KEY}`
   );
   if (!response.ok)
     return res.status(500).json({
