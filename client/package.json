@@ -10,6 +10,7 @@
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
+    "@types/jest-axe": "^3.5.4",
     "@types/node": "^16.11.45",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
@@ -33,6 +34,7 @@
     "html-webpack-plugin": "^5.5.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.4.3",
+    "jest-axe": "^6.0.0",
     "jest-resolve": "^27.4.2",
     "jest-watch-typeahead": "^1.0.0",
     "mini-css-extract-plugin": "^2.4.5",
@@ -149,8 +151,6 @@
     ]
   },
   "devDependencies": {
-    "@types/jest-axe": "^3.5.4",
-    "@types/styled-components": "^5.1.25",
-    "jest-axe": "^6.0.0"
+    "@types/styled-components": "^5.1.25"
   }
 }
