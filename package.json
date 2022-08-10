@@ -9,5 +9,8 @@
     "start": "cd server && npm start"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "engines": {
+    "node": "16.x"
+  }
 }
