@@ -1,5 +1,7 @@
 # Weather Forecaster
 
+Have a play at https://weather-forecaster-avu120.herokuapp.com/.
+
 A user can search for any city and get the weather forecast.
 In the search result, a user can see the current weather status and the weather for the next 5 days.
 
