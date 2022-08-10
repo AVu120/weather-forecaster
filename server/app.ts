@@ -7,7 +7,7 @@ import path from "path";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT | 5000;
+const port = process.env.PORT || 5000;
 
 // Enable only in local dev, i.e., comment out in production.
 app.use(cors());
