@@ -55,6 +55,8 @@ app.get("/api/weather", async (req: Request, res: Response) => {
   res.send(weatherForecast);
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+//@ts-ignore
+app.listen(port, (err: any) => {
+  if (err) console.log("Error starting server: ", err);
+  else console.log(`Example app listening on port ${port}`);
 });
